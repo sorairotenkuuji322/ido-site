@@ -3,60 +3,534 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>I.D.O Ultimate Secure</title>
+<title>池田探偵事務所（I.D.O）</title>
+
 <style>
-body{background:#111;color:#fff;font-family:Arial;margin:0}
-header{background:#000;border-bottom:3px solid gold;padding:20px;text-align:center}
-.card{background:#1c1c1c;margin:15px;padding:15px;border-radius:12px}
-button{background:gold;border:none;padding:8px 12px;border-radius:8px}
-.hidden{display:none}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Yu Gothic",sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+}
+
+header{
+background:linear-gradient(90deg,#111,#222);
+padding:25px;
+text-align:center;
+border-bottom:3px solid gold;
+}
+
+header h1{
+color:gold;
+font-size:40px;
+}
+
+header p{
+margin-top:10px;
+color:#ddd;
+}
+
+nav{
+background:#151515;
+padding:15px;
+text-align:center;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+margin:10px;
+font-weight:bold;
+}
+
+nav a:hover{
+color:gold;
+}
+
+section{
+padding:40px 20px;
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:#181818;
+padding:25px;
+border-radius:15px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(255,215,0,0.15);
+}
+
+h2{
+color:gold;
+margin-bottom:15px;
+}
+
+button{
+background:gold;
+border:none;
+padding:10px 20px;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:10px;
+border:none;
+border-radius:10px;
+}
+
+footer{
+text-align:center;
+padding:30px;
+background:#111;
+margin-top:40px;
+color:#aaa;
+}
+
+.hidden{
+display:none;
+}
+
+.rank{
+font-size:24px;
+color:gold;
+font-weight:bold;
+}
+
+.notice{
+background:#242424;
+padding:15px;
+border-left:5px solid gold;
+margin-bottom:10px;
+border-radius:10px;
+}
 </style>
 </head>
+
 <body>
-<header><h1>🔍 I.D.O ULTIMATE SECURE</h1></header>
+
+<header>
+<h1>🕵️ 池田探偵事務所</h1>
+<p>I.D.O（Ikeda Detective Office）</p>
+</header>
+
+<nav>
+<a href="#home">ホーム</a>
+<a href="#request">依頼</a>
+<a href="#cases">案件</a>
+<a href="#members">メンバー</a>
+<a href="#schedule">予定</a>
+<a href="#notice">お知らせ</a>
+<a href="#admin">管理者</a>
+</nav>
+
+<section id="home">
 
 <div class="card">
-<h2>一般利用者ページ</h2>
-<p>施設内活動の案内や依頼受付用</p>
+<h2>🏠 ホーム</h2>
+<p>
+池田探偵事務所（I.D.O）は施設内で活動する
+ボランティア探偵団です。
+</p>
+<br>
+<p>
+落とし物探し・人探し・困りごとの解決などを
+協力して行います。
+</p>
 </div>
 
 <div class="card">
-<h2>🔐 管理者ページ</h2>
-<button onclick="openAdmin()">管理者メニューを開く</button>
-<div id="adminArea" class="hidden">
-<h3>管理者機能</h3>
-<ul>
-<li>👑 所長名変更</li>
-<li>👥 メンバー管理</li>
-<li>📁 全案件閲覧</li>
-<li>✅ 解決済み案件閲覧</li>
-<li>📊 統計閲覧</li>
-<li>📅 活動予定編集</li>
-<li>📢 お知らせ編集</li>
-<li>🔑 パスワード変更</li>
+<h2>🏆 実績</h2>
+<p>解決件数</p>
+<div class="rank" id="solveCount">0件</div>
+<br>
+<p>活動回数</p>
+<div class="rank" id="activityCount">0回</div>
+</div>
+
+</section>
+
+<section id="request">
+
+<div class="card">
+<h2>🔍 依頼受付</h2>
+
+<input id="clientName" placeholder="依頼者名">
+
+<select id="requestType" style="width:100%;padding:10px;border-radius:10px;">
+<option>落とし物捜索</option>
+<option>施設内の人探し</option>
+<option>その他</option>
+</select>
+
+<textarea id="requestText" rows="5" placeholder="内容を入力"></textarea>
+
+<button onclick="sendRequest()">依頼する</button>
+
+</div>
+
+</section>
+
+<section id="cases">
+
+<div class="card">
+<h2>📁 案件一覧</h2>
+
+<ul id="caseList">
+<li>現在案件なし</li>
 </ul>
+
 </div>
+
+</section>
+
+<section id="members">
+
+<div class="card">
+<h2>👥 メンバー紹介</h2>
+
+<p><b>所長：</b><span id="chiefName">IDO</span></p>
+
+<br>
+
+<ul>
+<li>主任調査員</li>
+<li>副主任調査員</li>
+<li>調査員</li>
+<li>見習い調査員</li>
+</ul>
+
 </div>
+
+</section><section id="schedule">
+
+<div class="card">
+<h2>📅 活動予定</h2>
+
+<ul id="scheduleList">
+<li>活動予定はありません</li>
+</ul>
+
+</div>
+
+</section>
+
+<section id="notice">
+
+<div class="card">
+<h2>📢 お知らせ</h2>
+
+<div id="noticeArea">
+<div class="notice">I.D.Oへようこそ！</div>
+</div>
+
+</div>
+
+</section>
+
+<section id="admin">
+
+<div class="card">
+
+<h2>🔐 管理者ページ</h2>
+
+<button onclick="adminLogin()">
+管理者メニューを開く
+</button>
+
+<div id="adminPanel" class="hidden">
+
+<hr style="margin:20px 0;">
+
+<h3>👑 所長名変更</h3>
+
+<input id="newChief" placeholder="新しい所長名">
+
+<button onclick="changeChief()">
+変更
+</button>
+
+<br><br>
+
+<h3>📢 お知らせ追加</h3>
+
+<input id="newNotice" placeholder="お知らせ内容">
+
+<button onclick="addNotice()">
+追加
+</button>
+
+<br><br>
+
+<h3>📅 活動予定追加</h3>
+
+<input id="newSchedule" placeholder="予定内容">
+
+<button onclick="addSchedule()">
+追加
+</button>
+
+<br><br>
+
+<h3>🏆 実績変更</h3>
+
+<input id="newSolve" type="number" placeholder="解決件数">
+
+<input id="newActivity" type="number" placeholder="活動回数">
+
+<button onclick="saveStats()">
+保存
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<footer>
+
+池田探偵事務所（I.D.O）
+
+<br>
+
+施設内活動専用サイト
+
+</footer>
 
 <script>
-let password = localStorage.getItem("ido_secure_pw") || "IDO-BIGDREAM-2026";
 
-function checkAdmin(){
-  const p = prompt("管理者パスワードを入力");
-  return p === password;
+const ADMIN_PASSWORD = "IDO-BIGDREAM-2026";
+
+function adminLogin(){
+
+const pass = prompt("管理者パスワード");
+
+if(pass===ADMIN_PASSWORD){
+
+document.getElementById("adminPanel").classList.remove("hidden");
+
+}else{
+
+alert("パスワードが違います");
+
 }
 
-function openAdmin(){
-  if(checkAdmin()){
-    document.getElementById("adminArea").classList.remove("hidden");
-    alert("管理者認証成功。操作後は再度パスワード入力が必要です。");
-    setTimeout(()=>{
-      document.getElementById("adminArea").classList.add("hidden");
-    }, 60000);
-  } else {
-    alert("パスワードが違います");
-  }
 }
+
+function sendRequest(){
+
+const name =
+document.getElementById("clientName").value;
+
+const type =
+document.getElementById("requestType").value;
+
+const text =
+document.getElementById("requestText").value;
+
+if(!name || !text){
+
+alert("入力してください");
+
+return;
+
+}
+
+const list =
+document.getElementById("caseList");
+
+if(list.innerHTML.includes("現在案件なし")){
+
+list.innerHTML="";
+
+}
+
+const li=document.createElement("li");
+
+li.textContent=
+name+"｜"+type+"｜"+text;
+
+list.appendChild(li);
+
+localStorage.setItem(
+"caseData",
+list.innerHTML
+);
+
+alert("依頼を受け付けました");
+
+}
+
+function changeChief(){
+
+const name =
+document.getElementById("newChief").value;
+
+localStorage.setItem(
+"chiefName",
+name
+);
+
+document.getElementById(
+"chiefName"
+).textContent=name;
+
+}
+
+function addNotice(){
+
+const text =
+document.getElementById("newNotice").value;
+
+const div=document.createElement("div");
+
+div.className="notice";
+
+div.textContent=text;
+
+document.getElementById(
+"noticeArea"
+).appendChild(div);
+
+localStorage.setItem(
+"noticeData",
+document.getElementById("noticeArea").innerHTML
+);
+
+}
+
+function addSchedule(){
+
+const text =
+document.getElementById("newSchedule").value;
+
+const list =
+document.getElementById("scheduleList");
+
+if(list.innerHTML.includes("活動予定はありません")){
+
+list.innerHTML="";
+
+}
+
+const li=document.createElement("li");
+
+li.textContent=text;
+
+list.appendChild(li);
+
+localStorage.setItem(
+"scheduleData",
+list.innerHTML
+);
+
+}
+
+function saveStats(){
+
+const solve =
+document.getElementById("newSolve").value;
+
+const activity =
+document.getElementById("newActivity").value;
+
+document.getElementById(
+"solveCount"
+).textContent=solve+"件";
+
+document.getElementById(
+"activityCount"
+).textContent=activity+"回";
+
+localStorage.setItem(
+"solveCount",
+solve
+);
+
+localStorage.setItem(
+"activityCount",
+activity
+);
+
+}
+
+window.onload=function(){
+
+if(localStorage.getItem("chiefName")){
+
+document.getElementById(
+"chiefName"
+).textContent=
+localStorage.getItem("chiefName");
+
+}
+
+if(localStorage.getItem("caseData")){
+
+document.getElementById(
+"caseList"
+).innerHTML=
+localStorage.getItem("caseData");
+
+}
+
+if(localStorage.getItem("noticeData")){
+
+document.getElementById(
+"noticeArea"
+).innerHTML=
+localStorage.getItem("noticeData");
+
+}
+
+if(localStorage.getItem("scheduleData")){
+
+document.getElementById(
+"scheduleList"
+).innerHTML=
+localStorage.getItem("scheduleData");
+
+}
+
+if(localStorage.getItem("solveCount")){
+
+document.getElementById(
+"solveCount"
+).textContent=
+localStorage.getItem("solveCount")+"件";
+
+}
+
+if(localStorage.getItem("activityCount")){
+
+document.getElementById(
+"activityCount"
+).textContent=
+localStorage.getItem("activityCount")+"回";
+
+}
+
+};
+
 </script>
+
 </body>
 </html>
