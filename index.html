@@ -531,6 +531,63 @@ localStorage.getItem("activityCount")+"回";
 };
 
 </script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+getFirestore,
+doc,
+getDoc,
+setDoc
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+  const firebaseConfig = {
+  apiKey: "AIzaSyDXHGP...JLCk",
+  authDomain: "ido-site-94dac.firebaseapp.com",
+  projectId: "ido-site-94dac",
+  storageBucket: "ido-site-94dac.firebasestorage.app",
+  messagingSenderId: "676012182619",
+  appId: "1:676012182619:web:324ea03ed55e7df5bbc37e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.changeChief = async function(){
+
+const name =
+document.getElementById("newChief").value;
+
+await setDoc(
+doc(db,"settings","main"),
+{
+director:name
+}
+);
+
+document.getElementById(
+"chiefName"
+).textContent=name;
+}
+
+async function loadChief(){
+
+const snap =
+await getDoc(
+doc(db,"settings","main")
+);
+
+if(snap.exists()){
+
+document.getElementById(
+"chiefName"
+).textContent =
+snap.data().director;
+
+}
+
+}
+
+loadChief();
+</script>
 </body>
 </html>
