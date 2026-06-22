@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>I.D.O Ultimate Secure</title>
+<style>
+body{background:#111;color:#fff;font-family:Arial;margin:0}
+header{background:#000;border-bottom:3px solid gold;padding:20px;text-align:center}
+.card{background:#1c1c1c;margin:15px;padding:15px;border-radius:12px}
+button{background:gold;border:none;padding:8px 12px;border-radius:8px}
+.hidden{display:none}
+</style>
+</head>
+<body>
+<header><h1>🔍 I.D.O ULTIMATE SECURE</h1></header>
+
+<div class="card">
+<h2>一般利用者ページ</h2>
+<p>施設内活動の案内や依頼受付用</p>
+</div>
+
+<div class="card">
+<h2>🔐 管理者ページ</h2>
+<button onclick="openAdmin()">管理者メニューを開く</button>
+<div id="adminArea" class="hidden">
+<h3>管理者機能</h3>
+<ul>
+<li>👑 所長名変更</li>
+<li>👥 メンバー管理</li>
+<li>📁 全案件閲覧</li>
+<li>✅ 解決済み案件閲覧</li>
+<li>📊 統計閲覧</li>
+<li>📅 活動予定編集</li>
+<li>📢 お知らせ編集</li>
+<li>🔑 パスワード変更</li>
+</ul>
+</div>
+</div>
+
+<script>
+let password = localStorage.getItem("ido_secure_pw") || "IDO-BIGDREAM-2026";
+
+function checkAdmin(){
+  const p = prompt("管理者パスワードを入力");
+  return p === password;
+}
+
+function openAdmin(){
+  if(checkAdmin()){
+    document.getElementById("adminArea").classList.remove("hidden");
+    alert("管理者認証成功。操作後は再度パスワード入力が必要です。");
+    setTimeout(()=>{
+      document.getElementById("adminArea").classList.add("hidden");
+    }, 60000);
+  } else {
+    alert("パスワードが違います");
+  }
+}
+</script>
+</body>
+</html>
