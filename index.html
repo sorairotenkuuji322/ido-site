@@ -588,6 +588,29 @@ snap.data().director;
 }
 
 loadChief();
+  async function loadNotice(){
+
+const snap =
+await getDoc(
+doc(db,"notices","notices")
+);
+
+if(snap.exists()){
+
+document.getElementById(
+"noticeArea"
+).innerHTML =
+'<div class="notice">' +
+snap.data().text +
+'</div>';
+
+}
+
+}
+
+loadNotice();
+ </script>
+</body>
 </script>
 </body>
 </html>
