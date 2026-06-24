@@ -575,6 +575,23 @@ snap.data().director;
 }
 
 loadChief();
+   async function addNotice(){
+
+const text =
+document.getElementById("newNotice").value;
+
+await setDoc(
+doc(db,"notices","notices"),
+{
+text:text
+}
+);
+
+alert("お知らせを保存しました！");
+
+loadNotice();
+
+}
   async function loadNotice(){
 
 const snap =
