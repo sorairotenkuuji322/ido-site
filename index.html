@@ -387,26 +387,20 @@ document.getElementById(
 ).textContent=name;
 
 }
-
-function addNotice(){
+async function addNotice(){
 
 const text =
 document.getElementById("newNotice").value;
 
-const div=document.createElement("div");
-
-div.className="notice";
-
-div.textContent=text;
-
-document.getElementById(
-"noticeArea"
-).appendChild(div);
-
-localStorage.setItem(
-"noticeData",
-document.getElementById("noticeArea").innerHTML
+await setDoc(
+doc(db,"notices","notices"),
+{
+text:text
+}
 );
+
+alert("お知らせを保存しました！");
+loadNotice();
 
 }
 
