@@ -388,9 +388,16 @@ document.getElementById(
 
 }
 window.adminLogin = function(){
-  document.getElementById("adminPanel").classList.remove("hidden");
-}
 
+  const password = prompt("管理者パスワードを入力してください");
+
+  if(password === "ido2026"){
+    document.getElementById("adminPanel").classList.remove("hidden");
+  }else{
+    alert("パスワードが違います");
+  }
+
+}
 function addSchedule(){
 
 const text =
