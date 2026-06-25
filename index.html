@@ -387,20 +387,6 @@ document.getElementById(
 ).textContent=name;
 
 }
-window.addNotice = async function(){
-
-const text =
-document.getElementById("newNotice").value;
-
-await setDoc(
-doc(db,"notices","notices"),
-{
-text:text
-}
-);
-
-alert("お知らせを保存しました！");
-loadNotice();
 
 }
 
@@ -575,7 +561,10 @@ snap.data().director;
 }
 
 loadChief();
-  console.log(setDoc); async function addNotice(){
+);
+
+loadNotice();
+   window.addNotice = async function(){
 
 const text =
 document.getElementById("newNotice").value;
@@ -588,8 +577,8 @@ text:text
 );
 
 alert("お知らせを保存しました！");
-
 loadNotice();
+
 
 }
   async function loadNotice(){
