@@ -415,25 +415,7 @@ window.addSchedule = async function(){
   loadSchedule();
 
 }
-async function loadSchedule(){
 
-  const snap =
-  await getDoc(
-    doc(db,"schedule","main")
-  );
-
-  if(snap.exists()){
-
-    document.getElementById(
-      "scheduleList"
-    ).innerHTML =
-    "<li>" + snap.data().text + "</li>";
-
-  }
-
-}
-
-loadSchedule();
    function saveStats(){
 
 const solve =
@@ -618,6 +600,42 @@ snap.data().text +
 }
 
 loadNotice();
+   window.addSchedule = async function(){
+
+  const text =
+  document.getElementById("newSchedule").value;
+
+  await setDoc(
+    doc(db,"schedule","main"),
+    {
+      text:text
+    }
+  );
+
+  alert("活動予定を保存しました！");
+
+  loadSchedule();
+
+}
+   async function loadSchedule(){
+
+  const snap =
+  await getDoc(
+    doc(db,"schedule","main")
+  );
+
+  if(snap.exists()){
+
+    document.getElementById(
+      "scheduleList"
+    ).innerHTML =
+    "<li>" + snap.data().text + "</li>";
+
+  }
+
+}
+
+loadSchedule();
 </script>
 </body>
 </html>
