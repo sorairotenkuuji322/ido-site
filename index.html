@@ -398,34 +398,43 @@ window.adminLogin = function(){
   }
 
 }
-function addSchedule(){
+window.addSchedule = async function(){
 
-const text =
-document.getElementById("newSchedule").value;
+  const text =
+  document.getElementById("newSchedule").value;
 
-const list =
-document.getElementById("scheduleList");
+  await setDoc(
+    doc(db,"schedule","main"),
+    {
+      text:text
+    }
+  );
 
-if(list.innerHTML.includes("活動予定はありません")){
+  alert("活動予定を保存しました！");
 
-list.innerHTML="";
+  loadSchedule();
+
+}
+async function loadSchedule(){
+
+  const snap =
+  await getDoc(
+    doc(db,"schedule","main")
+  );
+
+  if(snap.exists()){
+
+    document.getElementById(
+      "scheduleList"
+    ).innerHTML =
+    "<li>" + snap.data().text + "</li>";
+
+  }
 
 }
 
-const li=document.createElement("li");
-
-li.textContent=text;
-
-list.appendChild(li);
-
-localStorage.setItem(
-"scheduleData",
-list.innerHTML
-);
-
-}
-
-function saveStats(){
+loadSchedule();
+   function saveStats(){
 
 const solve =
 document.getElementById("newSolve").value;
