@@ -652,6 +652,30 @@ loadNotice();
   alert("活動予定を削除しました！");
 
 }
+   window.deleteOneSchedule = async function(index){
+
+  if(!confirm("この予定を削除しますか？")){
+    return;
+  }
+
+  const snap = await getDoc(
+    doc(db,"schedule","main")
+  );
+
+  let list = snap.data().list || [];
+
+  list.splice(index,1);
+
+  await setDoc(
+    doc(db,"schedule","main"),
+    {
+      list:list
+    }
+  );
+
+  loadSchedule();
+
+}
    async function loadSchedule(){
 
   const snap =
@@ -666,21 +690,12 @@ loadNotice();
 
   let html = "";
 
-  for(const item of list){
+for(const [index, item] of list.entries()){
 
-    html += "<li>" + item + "</li>";
-
-  }
-
-  document.getElementById(
-    "scheduleList"
-  ).innerHTML = html;
-
-}
-
-}
-
-loadSchedule();
-</script>
-</body>
-</html>
+html += `
+<li>
+  ${item}
+  <button onclick="deleteOneSchedule(${index})">
+    🗑
+  </button>
+</li>`;
