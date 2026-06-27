@@ -600,15 +600,28 @@ snap.data().text +
 }
 
 loadNotice();
-   window.addSchedule = async function(){
+  window.addSchedule = async function(){
 
   const text =
   document.getElementById("newSchedule").value;
 
+  const snap =
+  await getDoc(
+    doc(db,"schedule","main")
+  );
+
+  let list = [];
+
+  if(snap.exists() && snap.data().list){
+    list = snap.data().list;
+  }
+
+  list.push(text);
+
   await setDoc(
     doc(db,"schedule","main"),
     {
-      text:text
+      list:list
     }
   );
 
@@ -624,14 +637,24 @@ loadNotice();
     doc(db,"schedule","main")
   );
 
-  if(snap.exists()){
+ if(snap.exists()){
 
-    document.getElementById(
-      "scheduleList"
-    ).innerHTML =
-    "<li>" + snap.data().text + "</li>";
+  const list =
+  snap.data().list || [];
+
+  let html = "";
+
+  for(const item of list){
+
+    html += "<li>" + item + "</li>";
 
   }
+
+  document.getElementById(
+    "scheduleList"
+  ).innerHTML = html;
+
+}
 
 }
 
