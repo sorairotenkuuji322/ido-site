@@ -279,6 +279,9 @@ border-radius:10px;
 <button onclick="addSchedule()">
 追加
 </button>
+ <button onclick="deleteSchedule()">
+🗑 活動予定を全部削除
+</button>
 
 <br><br>
 
@@ -628,6 +631,25 @@ loadNotice();
   alert("活動予定を保存しました！");
 
   loadSchedule();
+
+}
+   window.deleteSchedule = async function(){
+
+  if(!confirm("活動予定をすべて削除しますか？")){
+    return;
+  }
+
+  await setDoc(
+    doc(db,"schedule","main"),
+    {
+      list:[]
+    }
+  );
+
+  document.getElementById("scheduleList").innerHTML =
+  "<li>活動予定はありません</li>";
+
+  alert("活動予定を削除しました！");
 
 }
    async function loadSchedule(){
